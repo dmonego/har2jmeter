@@ -1,5 +1,5 @@
 # coding=UTF-8
-import sys, jinja2, json, codecs, re
+import sys, jinja2, json, codecs, re, argparse
 from jinja2 import Environment, PackageLoader
 
 
@@ -33,5 +33,7 @@ def urlparts(harrequest):
     return {'url': url, 'host': host, 'path': path, 'params':params}
 
 if __name__ == '__main__':
-    fname = sys.argv[1]
-    har2jmeter(fname)
+    parser = argparse.ArgumentParser(description='Python script to convert har (Http ARchive) files to jMeter load tests')
+    parser.add_argument('-f','--file', help='har file to covert', required=True)
+    args = parser.parse_args()
+    har2jmeter(args.file)
