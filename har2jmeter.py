@@ -16,7 +16,7 @@ def har2jmeter(harfile):
     print(template.render(urls=urls))
 
 def urlparts(harrequest):
-    host_arr = [h['value'] for h in harrequest['headers'] if (h.has_key('name') and h['name'] == 'Host')]
+    host_arr = [h['value'] for h in harrequest['headers'] if ('name' in h and h['name'] == 'Host')]
     if len(host_arr) == 1:
         host = host_arr[0]
     else:
