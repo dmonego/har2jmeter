@@ -1,6 +1,9 @@
+#!/usr/bin/env python
 # coding=UTF-8
-import sys, jinja2, json, codecs, re
-from jinja2 import Environment, PackageLoader
+import os
+import sys, json, codecs, re
+
+from jinja2 import Environment, FileSystemLoader
 
 
 def har2jmeter(harfile):
@@ -10,7 +13,8 @@ def har2jmeter(harfile):
 
     urls = [urlparts(entry['request']) for entry in harentries]
     urls = [url for url in urls if not url is None]
-    env = Environment(loader=PackageLoader(__name__, 'templates'))
+    templates_dir = os.path.join(sys.exec_prefix, 'templates')
+    env = Environment(loader=FileSystemLoader(templates_dir))
     template = env.get_template('jmeter.jinja')
 
     print(template.render(urls=urls))
@@ -28,9 +32,9 @@ def urlparts(harrequest):
         params = dict([p.split('=') for p in get_parts[1].split("&")])
     else:
         params = {}
-    pathstart = re.search(host, url).end() 
+    pathstart = re.search(host, url).end()
     path = url[pathstart:]
-    return {'url': url, 'host': host, 'path': path, 'params':params}
+    return {'url': url, 'host': host, 'path': path, 'params': params}
 
 if __name__ == '__main__':
     fname = sys.argv[1]
