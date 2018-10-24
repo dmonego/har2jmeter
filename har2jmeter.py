@@ -34,6 +34,6 @@ def urlparts(harrequest):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Python script to convert har (Http ARchive) files to jMeter load tests')
-    parser.add_argument('-f','--file', help='har file to covert', required=True)
+    parser.add_argument(dest="file", help='har file to covert')
     args = parser.parse_args()
     har2jmeter(args.file)
