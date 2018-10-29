@@ -15,6 +15,7 @@ setup(
     install_requires=['jinja2>=2.7.3'],
     scripts=["har2jmeter.py"],
     packages=find_packages(),
-    data_files=[('templates', ['templates/jmeter.jinja'])],
+    
+    data_files=[('har2jmeter', ['templates/jmeter.jinja'])],
     keywords=['jmeter', 'http archive', 'har2jmx', 'command line', 'cli']
 )

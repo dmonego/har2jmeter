@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # coding=UTF-8
-import os
-import sys, json, codecs, re, argparse
+import json, codecs, re, argparse
 
-from jinja2 import Environment, PackageLoader, FileSystemLoader
-
+from har2jmeter import loadTemplate 
 
 def har2jmeter(harfile):
     hardata = codecs.open(harfile, 'r', 'utf-8').read()
@@ -13,15 +11,7 @@ def har2jmeter(harfile):
 
     urls = [urlparts(entry['request']) for entry in harentries]
     urls = [url for url in urls if not url is None]
-
-    templates_dir = os.path.join(sys.exec_prefix, 'templates')
-    if os.path.exists(templates_dir):
-        env = Environment(loader=FileSystemLoader(templates_dir))
-    else:
-        env = Environment(loader=PackageLoader(__name__, 'templates'))
-
-    template = env.get_template('jmeter.jinja')
-
+    template = loadTemplate()
     print(template.render(urls=urls))
 
 def urlparts(harrequest):
