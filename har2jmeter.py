@@ -2,7 +2,7 @@
 # coding=UTF-8
 import json, codecs, re, argparse
 
-from har2jmeter import loadTemplate 
+from har2jmeter_utils import loadTemplate 
 
 def har2jmeter(harfile):
     hardata = codecs.open(harfile, 'r', 'utf-8').read()

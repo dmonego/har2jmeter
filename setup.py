@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import setup, find_packages
+from distutils.core import setup
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -14,8 +14,7 @@ setup(
     url='https://github.com/dmonego/har2jmeter',
     install_requires=['jinja2>=2.7.3'],
     scripts=["har2jmeter.py"],
-    packages=find_packages(),
-    
-    data_files=[('har2jmeter', ['templates/jmeter.jinja'])],
+    packages=['har2jmeter_utils'],
+    package_data={'har2jmeter_utils': ['templates/*']},
     keywords=['jmeter', 'http archive', 'har2jmx', 'command line', 'cli']
 )
