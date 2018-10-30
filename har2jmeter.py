@@ -1,7 +1,8 @@
+#!/usr/bin/env python
 # coding=UTF-8
-import sys, jinja2, json, codecs, re, argparse
-from jinja2 import Environment, PackageLoader
+import json, codecs, re, argparse
 
+from har2jmeter_utils import loadTemplate 
 
 def har2jmeter(harfile):
     hardata = codecs.open(harfile, 'r', 'utf-8').read()
@@ -10,9 +11,7 @@ def har2jmeter(harfile):
 
     urls = [urlparts(entry['request']) for entry in harentries]
     urls = [url for url in urls if not url is None]
-    env = Environment(loader=PackageLoader(__name__, 'templates'))
-    template = env.get_template('jmeter.jinja')
-
+    template = loadTemplate()
     print(template.render(urls=urls))
 
 def urlparts(harrequest):
@@ -28,9 +27,9 @@ def urlparts(harrequest):
         params = dict([p.split('=') for p in get_parts[1].split("&")])
     else:
         params = {}
-    pathstart = re.search(host, url).end() 
+    pathstart = re.search(host, url).end()
     path = url[pathstart:]
-    return {'url': url, 'host': host, 'path': path, 'params':params}
+    return {'url': url, 'host': host, 'path': path, 'params': params}
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Python script to convert har (Http ARchive) files to jMeter load tests')

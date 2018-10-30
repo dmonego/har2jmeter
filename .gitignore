@@ -1,0 +1,4 @@
+*.pyc
+build/*
+dist/*
+har2jmeter.egg-info/*
